@@ -1,11 +1,88 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    {{ content | safe }}
-  </div>
-{% endblock %}
+<style>
+  @font-face {
+    font-family: 'MonaspaceKrypton';
+    src: url("{{ url_for('views.themes', path='fonts/MonaspaceKrypton-Light.otf') }}") format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root { --accent: #7AFFC7; --accent-2: #9FFFDc; }
+  body, .home-hero, .home-bottom, .home-links, .home-desc, .home-subtitle, .home-cta, .home-hero h1, .home-hero .display-4 {
+    font-family: 'MonaspaceKrypton', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+  .home-hero { min-height: calc(100vh - 140px); display: flex; align-items: center; justify-content: center; text-align: center; }
+  .home-hero h1 { color: var(--accent); font-weight: 600; letter-spacing: 2px; margin-bottom: 1.25rem; }
+  .home-subtitle { color: var(--accent); opacity: .95; margin-bottom: .75rem; }
+  .home-desc { color: #bfbfbf; max-width: 900px; margin: 0 auto 1.75rem; font-size: .95rem; }
+  .home-cta { background: var(--accent); color: #0b0f10; border: 0; padding: .8rem 1.5rem; min-width: 240px; border-radius: .25rem; font-weight: 600; }
+  .home-cta:hover, .home-cta:focus { background: var(--accent-2); color: #0b0f10; text-decoration: none; }
+  .home-links { color: #bfbfbf; margin-top: 2.75rem; }
+  .home-links a { color: var(--accent); }
+  .home-bottom { position: fixed; left: 0; right: 0; bottom: 20px; padding: 0 24px; display: flex; justify-content: space-between; color: #dcdcdc; font-size: .95rem; }
+  .home-bottom a { color: var(--accent); }
 
-{% block scripts %}
-  {{ Assets.js("assets/js/page.js") }}
+body, .container, .jumbotron, .row, .form-group, .form-control, .btn, .btn-custom {
+  font-family: 'MonaspaceKrypton', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+.btn-custom, .btn-primary {
+  background-color: #7AFFC7;
+  color: #1F2021;
+  border-color: #7AFFC7;
+  font-weight: 600;
+  border-radius: .25rem;
+  min-width: 240px;
+  padding: .8rem 1.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-custom:hover, .btn-primary:hover, .btn-custom:focus, .btn-primary:focus {
+  background-color: #9FFFDc;
+  color: #0b0f10;
+  border-color: #9FFFDc;
+  text-decoration: none;
+}
+.jumbotron h1 {
+  color: #7AFFC7;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 1.25rem;
+}
+.form-control {
+  background: #23272b;
+  color: #7AFFC7;
+  border: 1px solid #7AFFC7;
+}
+.form-control:focus {
+  background: #23272b;
+  color: #7AFFC7;
+  border-color: #9FFFDc;
+  box-shadow: none;
+}
+a {
+  color: #7AFFC7;
+}
+a:hover {
+  color: #9FFFDc;
+}
+
+</style>
+<div class="container home-hero">
+  <div class="w-100">
+    <h1 class="display-4">{{ Configs.ctf_name }}</h1>
+    <!-- <div class="home-subtitle">India's No.1 Ranked CTF Team & Cyber Security Research Club</div>
+    <p class="home-desc">We are a team of college students from Amrita University, passionate about cyber security, and dedicated to protect tomorrow's cyberspace.</p> -->
+    <div class="my-4">
+      <a class="btn home-cta" href="{{ url_for('challenges.listing') }}">Start Challenge</a>
+    </div>
+    <div class="home-links">
+      <p>We also host monthly cybersecurity meetups—check that out <a href="#" target="_blank" rel="noopener">here</a></p>
+    </div>
+  </div>
+</div>
+<div class="home-bottom">
+  <div>bi0s</div>
+  <div><a href="#" target="_blank" rel="noopener">Join Whatsapp</a></div>
+</div>
 {% endblock %}

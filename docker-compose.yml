@@ -5,15 +5,20 @@ services:
     restart: always
     ports:
       - "8000:8000"
+    command: flask run --host=0.0.0.0 --port=8000
     environment:
+      - SECRET_KEY=asdfghjkl
       - UPLOAD_FOLDER=/var/uploads
       - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
       - REDIS_URL=redis://cache:6379
-      - WORKERS=1
+      - WORKERS=4
       - LOG_FOLDER=/var/log/CTFd
       - ACCESS_LOG=-
       - ERROR_LOG=-
       - REVERSE_PROXY=true
+      - FLASK_ENV=development
+      - DEBUG=true
+
     volumes:
       - .data/CTFd/logs:/var/log/CTFd
       - .data/CTFd/uploads:/var/uploads
@@ -43,12 +48,14 @@ services:
       - MARIADB_PASSWORD=ctfd
       - MARIADB_DATABASE=ctfd
       - MARIADB_AUTO_UPGRADE=1
+      - MARIADB_MAX_CONNECTIONS=200
+      - MARIADB_MAX_ALLOWED_PACKET=64M
     volumes:
       - .data/mysql:/var/lib/mysql
     networks:
         internal:
     # This command is required to set important mariadb defaults
-    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0]
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0, --max_connections=200, --max_allowed_packet=64M]
 
   cache:
     image: redis:4

@@ -1,9 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+@font-face {
+  font-family: 'MonaspaceKrypton';
+  src: url("{{ url_for('views.themes', path='fonts/MonaspaceKrypton-Light.otf') }}") format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+body, .container, .jumbotron, .row, .form-group, .form-control, .btn, .btn-custom {
+  font-family: 'MonaspaceKrypton', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+.btn-custom, .btn-primary {
+  background-color: #7AFFC7;
+  color: #1F2021;
+  border-color: #7AFFC7;
+  font-weight: 600;
+  border-radius: .25rem;
+  min-width: 240px;
+  padding: .8rem 1.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-custom:hover, .btn-primary:hover, .btn-custom:focus, .btn-primary:focus {
+  background-color: #9FFFDc;
+  color: #0b0f10;
+  border-color: #9FFFDc;
+  text-decoration: none;
+}
+.jumbotron h1 {
+  color: #7AFFC7;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 1.25rem;
+}
+.form-control {
+  background: #23272b;
+  color: #7AFFC7;
+  border: 1px solid #7AFFC7;
+}
+.form-control:focus {
+  background: #23272b;
+  color: #7AFFC7;
+  border-color: #9FFFDc;
+  box-shadow: none;
+}
+a {
+  color: #7AFFC7;
+}
+a:hover {
+  color: #9FFFDc;
+}
+</style>
   <div class="jumbotron">
     <div class="container">
-      <h1>{{ user.name }}</h1>
+      <h1 style="font-family: MonaspaceKrypton;">{{ user.name }}</h1>
 
       {% if user.team_id %}
         <h2>
@@ -151,15 +202,15 @@
       <div class="row" x-data="UserGraphs">
         <div class="col-md-6 d-none d-md-block d-lg-block py-4">
           <div class="progress">
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
-              :style="{ width: `${getSolvePercentage()}%`, 'background-color': 'rgb(0, 209, 64)' }" 
+            <div
+              class="progress-bar"
+              role="progressbar"
+              :style="{ width: `${getSolvePercentage()}%`, 'background-color': 'rgb(0, 209, 64)' }"
             >
             </div>
-            <div 
-              class="progress-bar" 
-              role="progressbar" 
+            <div
+              class="progress-bar"
+              role="progressbar"
               :style="{ width: `${getFailPercentage()}%`, 'background-color': 'rgb(207, 38, 0)' }"
             >
             </div>
@@ -180,9 +231,9 @@
         <div class="col-md-6 d-none d-md-block d-lg-block py-4">
           <div class="progress">
             <template x-for="category in getCategoryBreakdown()" :key="category.name">
-              <div 
-                class="progress-bar" 
-                role="progressbar" 
+              <div
+                class="progress-bar"
+                role="progressbar"
                 :style="{ width: `${category.percent}%`, 'background-color': category.color }"
               >
               </div>
